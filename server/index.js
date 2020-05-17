@@ -1,10 +1,15 @@
 const WebSocket = require("ws");
+const isMessages = require('./validation/isMessages');
+
+let Store = require('./store');
+
+Store = new Store();
 
 const wss = new WebSocket.Server({port: 4000});
 
 const date = new Date(Date.now()).toDateString();
 
-const testChatData = [
+const messages = [
     {
         id: '1',
         userId: '100',
@@ -29,16 +34,21 @@ const testChatData = [
 ]
 
 wss.on('connection', function connection(ws) {
-    console.log('connected!!!');
+
     ws.on('message', function incoming(data) {
-        console.log('data: ', data);
+        const parsedData = JSON.parse(data);
+        Store.addNewMessage(parsedData);
+
         wss.clients.forEach(function each(client) {
             if (client.readyState === WebSocket.OPEN) {
-
-                client.send(data);
+                client.send(JSON.stringify(Store.state.messages));
             }
         });
+
     });
 
-    ws.send(JSON.stringify(testChatData));
+
+    messages.map((msg) => Store.addNewMessage(msg))
+
+    ws.send(JSON.stringify(Store.state.messages));
 });

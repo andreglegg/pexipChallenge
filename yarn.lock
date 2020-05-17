@@ -10284,6 +10284,11 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+vet@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/vet/-/vet-3.3.4.tgz#caef01c61ce7f02a871deec6f57ef511fa54dd32"
+  integrity sha512-myq2VapXFs8pdn95GlBRvKQJTkCryX6JjKBCjI4xS0rmXACgC08mczfJcx9yvfcIOEo+t9xswYTdt4F8/j8pUA==
+
 vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
