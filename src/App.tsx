@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import { useSelector, useDispatch } from "react-redux";
 import classnames from 'classnames';
 
-const App = () => {
-    const [activeTab, setActiveTab] = useState('1');
+import onChangeTab from "./store/actionCreators/onChangeTab";
 
-    const toggle = (tab: React.SetStateAction<string>) => {
-        if(activeTab !== tab) setActiveTab(tab);
+const App = () => {
+    const { ws, activeTab } = useSelector((state: any) => state);
+    const dispatch = useDispatch();
+
+    const changeTab = (activeTab: string) => dispatch(onChangeTab(activeTab));
+
+    const toggle = (tab: string) => {
+        if(activeTab !== tab) changeTab(tab);
     }
+
+    useEffect(() => {
+        ws.onopen = () => {
+            console.log("connected");
+        };
+    });
 
     return (
         <div>

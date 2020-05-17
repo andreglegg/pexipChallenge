@@ -44,7 +44,7 @@ const initialState = {
 }
 
 wss.on('connection', function connection(ws) {
-
+    console.log('connected')
     ws.on('message', function incoming(data) {
         const parsedData = JSON.parse(data);
         switch (parsedData.type) {
