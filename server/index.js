@@ -8,7 +8,7 @@ Store = new Store();
 
 const wss = new WebSocket.Server({port: 4000});
 
-const date = new Date(Date.now()).toDateString();
+const date = new Date(Date.now()).toLocaleDateString([], {hour: '2-digit', minute:'2-digit'});
 
 const initialState = {
     messages: [

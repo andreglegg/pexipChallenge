@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Col, Form, FormGroup, Input } from 'reactstrap';
+import {Col, Form, FormGroup, Input, InputGroup} from 'reactstrap';
 import {useDispatch, useSelector} from "react-redux";
 import onChangeChatInput from "../../store/actionCreators/onChangeChatInput";
 
@@ -16,8 +16,8 @@ const ChatInput = () => {
             id: uuidv4(),
             userId: currentUser.id,
             message: chatInput,
-            createdAt: new Date(Date.now()).toLocaleTimeString(),
-            updatedAt: new Date(Date.now()).toLocaleTimeString(),
+            createdAt: new Date(Date.now()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            updatedAt: new Date(Date.now()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
         }
         const data = {
             type: 'addMessage',
@@ -25,13 +25,14 @@ const ChatInput = () => {
         }
         ws.send(JSON.stringify(data));
         changeChatInput('');
-        //TODO: update state with chat messages
     }
 
     return(
         <Form onSubmit={(event) => onSubmit(event)}>
-            <FormGroup>
-                <Input type="text" name="chatInput" placeholder="Message" value={chatInput} onChange={(event) => changeChatInput(event.target.value)}/>
+            <FormGroup className='m-0'>
+                <InputGroup size="lg">
+                    <Input type="text" name="chatInput" placeholder="Message" value={chatInput} onChange={(event) => changeChatInput(event.target.value)}/>
+                </InputGroup>
             </FormGroup>
         </Form>
     )

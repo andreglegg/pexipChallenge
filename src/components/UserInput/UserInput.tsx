@@ -20,13 +20,12 @@ const UserInput = () => {
         }
         ws.send(JSON.stringify(data));
         changeUsernameInput('');
-        //TODO: update state with chat messages
     }
 
     return(
         <Form onSubmit={(event) => onSubmit(event)}>
-            <FormGroup>
-                <InputGroup>
+            <FormGroup className='m-0'>
+                <InputGroup size="lg">
                     <InputGroupAddon addonType="prepend">
                         <InputGroupText>@</InputGroupText>
                     </InputGroupAddon>
