@@ -1,0 +1,17 @@
+.MessageItem {
+  .MetaBox {
+    position: relative;
+  }
+  .EditBox {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: -7px;
+  }
+  &:hover {
+    .EditBox {
+      display: block;
+    }
+  }
+}
+
