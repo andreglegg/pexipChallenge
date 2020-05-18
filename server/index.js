@@ -8,7 +8,7 @@ Store = new Store();
 
 const wss = new WebSocket.Server({port: 4000});
 
-const date = new Date(Date.now()).toLocaleDateString([], {hour: '2-digit', minute:'2-digit'});
+const date = Date.now();
 
 const initialState = {
     messages: [
@@ -71,6 +71,15 @@ wss.on('connection', function connection(ws) {
                         client.send(JSON.stringify(Store.state));
                     } else {
                         client.send(JSON.stringify({...Store.state, currentUser: newUser}));
+                    }
+                });
+                break;
+            }
+            case 'deleteMessage': {
+                Store.deleteMessage(parsedData.payload.id);
+                wss.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(JSON.stringify(Store.state));
                     }
                 });
                 break;

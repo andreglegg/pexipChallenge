@@ -7,16 +7,22 @@ import styles from './MessageItem.module.scss';
 
 const MessageItem = (props: any) => {
     const { currentUser } = useSelector((state: any) => state);
-    const {user, date, message} = props;
+    const {user, message} = props;
     const isOwner = (currentUser.id === user.id);
+
+    const wasEdited = (message.createdAt !== message.updatedAt);
+
+    const created = new Date(message.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+    const updated = new Date(message.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
 
     return(
         <div className={classNames(styles.MessageItem, 'pb-3')}>
             <div className={styles.MetaBox}>
-                <span className="font-weight-bold mr-2">{user.name}</span><span>{date}</span>
-                <span>{isOwner ? <EditBox {...message} /> : null}</span></div>
+                <span className="font-weight-bold mr-2">{user.name}</span>
+                <span>{!wasEdited ? created : `${updated} Edited`}</span>
+                <span>{isOwner ? <EditBox messageId={message.id} /> : null}</span></div>
             <div>
-                {message}
+                {message.message}
             </div>
         </div>
     )

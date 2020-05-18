@@ -46,7 +46,7 @@ const Tabs = () => {
     const renderMessages = messages.map((msg: any, index: any) => {
         const name = users.filter((usr: any) => usr.id === msg.userId)[0];
         return(
-            <MessageItem key={index} user={name} date={msg.createdAt} message={msg.message} />
+            <MessageItem key={index} user={name} message={msg} />
         )
     })
     const renderChatInput = (activeTab === '2') ? (<div className={ChatInputContainerStyle}>

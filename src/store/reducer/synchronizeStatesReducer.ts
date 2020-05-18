@@ -1,7 +1,7 @@
 import Action from '../actionCreators/onSynchronizeStates';
 
 const synchronizeStatesReducer = (state: any, action: any) => {
-
+    console.log('del msg: ', action.payload.data.messages);
     return {
         ...state,
         messages: action.payload.data.messages,
