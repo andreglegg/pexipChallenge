@@ -3,9 +3,10 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap
 import { useSelector, useDispatch } from "react-redux";
 import classnames from 'classnames';
 
-import onChangeTab from "./store/actionCreators/onChangeTab";
+import onChangeTab from "../../../src/store/actionCreators/onChangeTab";
+import ChatInput from "../../components/ChatInput/ChatInput";
 
-const App = () => {
+const Tabs = () => {
     const { ws, activeTab } = useSelector((state: any) => state);
     const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const App = () => {
                         className={classnames({ active: activeTab === '1' })}
                         onClick={() => { toggle('1'); }}
                     >
-                        Tab1
+                        Participants (0)
                     </NavLink>
                 </NavItem>
                 <NavItem>
@@ -37,7 +38,7 @@ const App = () => {
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
                     >
-                        Tab2
+                        Chat
                     </NavLink>
                 </NavItem>
             </Nav>
@@ -52,7 +53,7 @@ const App = () => {
                 <TabPane tabId="2">
                     <Row>
                         <Col sm="12">
-                            tab 2
+                            <ChatInput />
                         </Col>
                     </Row>
                 </TabPane>
@@ -61,4 +62,4 @@ const App = () => {
     );
 }
 
-export default App;
+export default Tabs;
