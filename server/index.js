@@ -1,6 +1,7 @@
 const WebSocket = require("ws");
-const isMessages = require('./validation/isMessages');
+const { v4: uuidv4 } = require('uuid');
 
+const isMessages = require('./validation/isMessages');
 let Store = require('./store');
 
 Store = new Store();
@@ -51,10 +52,27 @@ wss.on('connection', function connection(ws) {
         switch (parsedData.type) {
             case 'addMessage': {
                 Store.addNewMessage(parsedData.payload);
+                wss.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(JSON.stringify(Store.state));
+                    }
+                });
                 break;
             }
             case 'addUser': {
-                Store.addUser(parsedData.payload);
+                const newUser = {
+                    id: parsedData.payload.id || uuidv4(),
+                    name: parsedData.payload.name,
+                }
+                Store.addUser(newUser);
+                wss.clients.forEach(function each(client) {
+                    // send currentUser to the correct user
+                    if (client !== ws && client.readyState === WebSocket.OPEN) {
+                        client.send(JSON.stringify(Store.state));
+                    } else {
+                        client.send(JSON.stringify({...Store.state, currentUser: newUser}));
+                    }
+                });
                 break;
             }
             default: {
@@ -63,16 +81,18 @@ wss.on('connection', function connection(ws) {
         }
 
 
+        /*
         wss.clients.forEach(function each(client) {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify(Store.state));
             }
         });
+        */
 
     });
 
-    initialState.messages.map((msg) => Store.addNewMessage(msg))
-    initialState.users.map((usr) => Store.addUser(usr))
+    // initialState.messages.map((msg) => Store.addNewMessage(msg))
+    // initialState.users.map((usr) => Store.addUser(usr))
 
     ws.send(JSON.stringify(Store.state));
 });

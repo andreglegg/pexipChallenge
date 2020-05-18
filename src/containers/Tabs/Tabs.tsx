@@ -4,13 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import classnames from 'classnames';
 
 import onChangeTab from "../../../src/store/actionCreators/onChangeTab";
+import onSynchronizeStates from "../../store/actionCreators/onSynchronizeStates";
 import ChatInput from "../../components/ChatInput/ChatInput";
+import UserInput from "../../components/UserInput/UserInput";
+import hasCurrentUser from "../../utils/hasCurrentUser";
 
 const Tabs = () => {
-    const { ws, activeTab } = useSelector((state: any) => state);
+    const { ws, activeTab, currentUser, users } = useSelector((state: any) => state);
     const dispatch = useDispatch();
 
     const changeTab = (activeTab: string) => dispatch(onChangeTab(activeTab));
+    const synchronizeStates = (data: any) => dispatch(onSynchronizeStates(data));
 
     const toggle = (tab: string) => {
         if(activeTab !== tab) changeTab(tab);
@@ -19,6 +23,10 @@ const Tabs = () => {
     useEffect(() => {
         ws.onopen = () => {
             console.log("connected");
+        };
+        ws.onmessage = (event: any) => {
+            const data = JSON.parse(event.data);
+            synchronizeStates(data);
         };
     });
 
@@ -30,7 +38,7 @@ const Tabs = () => {
                         className={classnames({ active: activeTab === '1' })}
                         onClick={() => { toggle('1'); }}
                     >
-                        Participants (0)
+                        Participants ({users.length})
                     </NavLink>
                 </NavItem>
                 <NavItem>
@@ -53,7 +61,7 @@ const Tabs = () => {
                 <TabPane tabId="2">
                     <Row>
                         <Col sm="12">
-                            <ChatInput />
+                            { !hasCurrentUser(currentUser) ? <UserInput /> : <ChatInput />}
                         </Col>
                     </Row>
                 </TabPane>

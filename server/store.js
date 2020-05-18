@@ -1,5 +1,4 @@
 const isMessage = require('./validation/isMessage');
-const { v4: uuidv4 } = require('uuid');
 
 class Store {
     constructor() {
@@ -18,12 +17,8 @@ class Store {
     }
 
     addUser = (user) => {
-        const newUser = {
-            id: user.id || uuidv4(),
-            name: user.name,
-        }
         // isMessage.assert(newUser);
-        this.state.users = [...this.state.users, newUser]
+        this.state.users = [...this.state.users, user]
     }
 }
 
