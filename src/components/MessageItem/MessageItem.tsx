@@ -4,9 +4,10 @@ import classNames from "classnames";
 import EditBox from "./EditBox";
 
 import styles from './MessageItem.module.scss';
+import EditInput from "../EditInput/EditInput";
 
 const MessageItem = (props: any) => {
-    const { currentUser } = useSelector((state: any) => state);
+    const { currentUser, editMessage } = useSelector((state: any) => state);
     const {user, message} = props;
     const isOwner = (currentUser.id === user.id);
 
@@ -15,14 +16,15 @@ const MessageItem = (props: any) => {
     const created = new Date(message.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     const updated = new Date(message.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
 
+
     return(
         <div className={classNames(styles.MessageItem, 'pb-3')}>
             <div className={styles.MetaBox}>
                 <span className="font-weight-bold mr-2">{user.name}</span>
                 <span>{!wasEdited ? created : `${updated} Edited`}</span>
-                <span>{isOwner ? <EditBox messageId={message.id} /> : null}</span></div>
+                <span>{isOwner ? <EditBox message={message} /> : null}</span></div>
             <div>
-                {message.message}
+                {editMessage.id === message.id ? <EditInput /> : message.message}
             </div>
         </div>
     )

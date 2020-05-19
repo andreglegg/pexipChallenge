@@ -7,6 +7,7 @@ const defaultReducer = (state: any) => {
         ws: new WebSocket('ws://192.168.86.191:4000'),
         activeTab: '2',
         chatInput: '',
+        editMessage: [],
         usernameInput: '',
         currentUser: [],
     };

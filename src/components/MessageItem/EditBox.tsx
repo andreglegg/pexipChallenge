@@ -1,20 +1,19 @@
 import React from 'react';
 import {Button, ButtonGroup} from "reactstrap";
 import styles from './MessageItem.module.scss'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
 
-interface EditBoxProps {
-    messageId: string;
-}
-
-const EditBox = (props: EditBoxProps) => {
+const EditBox = (props: any) => {
     const { ws } = useSelector((state: any) => state);
-    const { messageId } = props;
+    const dispatch = useDispatch();
+    const { message } = props;
+    const changeEditInput = (input: string) => dispatch(onChangeEditInput(input));
 
     const onDeleteMessage = () => {
 
         const messageToDelete = {
-            id: messageId,
+            id: message.id,
         }
         const data = {
             type: 'deleteMessage',
@@ -22,9 +21,10 @@ const EditBox = (props: EditBoxProps) => {
         }
         ws.send(JSON.stringify(data))
     }
+
     return(
         <ButtonGroup size="sm" className={styles.EditBox}>
-            <Button>Edit</Button>
+            <Button onClick={() => changeEditInput(message)}>Edit</Button>
             <Button color="danger" onClick={() => onDeleteMessage()}>Delete</Button>
         </ButtonGroup>
     )

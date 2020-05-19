@@ -19,7 +19,6 @@ const ChatInput = () => {
             createdAt: Date.now(),
             updatedAt: Date.now(),
         }
-        // new Date(Date.now()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
         const data = {
             type: 'addMessage',
             payload: message
