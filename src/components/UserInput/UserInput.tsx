@@ -1,14 +1,15 @@
-import React, {useEffect} from 'react';
-import {Col, Form, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText} from 'reactstrap';
+import React from 'react';
+import {Form, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText} from 'reactstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import onChangeUsernameInput from '../../store/actionCreators/onChangeUsernameInput';
 import {User} from '../../types/User';
+import {State} from "../../types/State";
 
 const UserInput = () => {
-    const { ws, usernameInput } = useSelector((state: any) => state);
+    const { ws, usernameInput } = useSelector((state: State) => state);
     const dispatch = useDispatch();
 
-    const changeUsernameInput = (input: User) => dispatch(onChangeUsernameInput(input));
+    const changeUsernameInput = (input: User | string) => dispatch(onChangeUsernameInput(input));
 
     const onSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();

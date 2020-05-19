@@ -3,9 +3,10 @@ import {Button, ButtonGroup} from "reactstrap";
 import styles from './MessageItem.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
+import {State} from "../../types/State";
 
 const EditBox = (props: any) => {
-    const { ws } = useSelector((state: any) => state);
+    const { ws } = useSelector((state: State) => state);
     const dispatch = useDispatch();
     const { message } = props;
     const changeEditInput = (input: string) => dispatch(onChangeEditInput(input));

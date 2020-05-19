@@ -1,5 +1,5 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import React, {useEffect, useRef} from 'react';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Col } from 'reactstrap';
 import { useSelector, useDispatch } from "react-redux";
 import classnames from 'classnames';
 
@@ -12,15 +12,16 @@ import MessageItem from "../../components/MessageItem/MessageItem";
 
 import styles from './Tabs.module.scss';
 import Participants from "../../components/Participants/Participants";
+import {State} from "../../types/State";
 
 const Tabs = () => {
-    const { ws, activeTab, currentUser, users, messages } = useSelector((state: any) => state);
+    const { ws, activeTab, currentUser, users, messages } = useSelector((state: State) => state);
     const dispatch = useDispatch();
 
-    const changeTab = (activeTab: string) => dispatch(onChangeTab(activeTab));
-    const synchronizeStates = (data: any) => dispatch(onSynchronizeStates(data));
+    const changeTab = (activeTab: '1' | '2') => dispatch(onChangeTab(activeTab));
+    const synchronizeStates = (data: State) => dispatch(onSynchronizeStates(data));
 
-    const toggle = (tab: string) => {
+    const toggle = (tab: '1' | '2') => {
         if(activeTab !== tab) changeTab(tab);
     }
 
@@ -32,6 +33,7 @@ const Tabs = () => {
             const data = JSON.parse(event.data);
             synchronizeStates(data);
         };
+        if(activeTab === '2') scrollToBottom();
     });
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -69,7 +71,6 @@ const Tabs = () => {
                             className={classnames({ active: activeTab === '1' })}
                             onClick={() => {
                                 toggle('1');
-                                scrollToBottom();
                             }}
                         >
                             Participants ({countActiveUsers})

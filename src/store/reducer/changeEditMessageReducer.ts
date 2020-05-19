@@ -1,6 +1,8 @@
 import Action from '../actionCreators/onChangeEditMessage';
+import {State} from "../../types/State";
+import {ActionType} from "../../types/ActionType";
 
-const changeEditMessageReducer = (state: any, action: any) => {
+const changeEditMessageReducer = (state: State, action: ActionType) => {
     console.log('action.payload.message: ', action.payload.message);
     return {
         ...state,

@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import {Col, Form, FormGroup, Input, InputGroup} from 'reactstrap';
+import {Form, FormGroup, Input, InputGroup} from 'reactstrap';
 import {useDispatch, useSelector} from "react-redux";
 import onChangeChatInput from "../../store/actionCreators/onChangeChatInput";
+import {State} from "../../types/State";
 
 const ChatInput = () => {
-    const { ws, chatInput, currentUser } = useSelector((state: any) => state);
+    const { ws, chatInput, currentUser } = useSelector((state: State) => state);
     const dispatch = useDispatch();
 
     const changeChatInput = (input: string) => dispatch(onChangeChatInput(input));

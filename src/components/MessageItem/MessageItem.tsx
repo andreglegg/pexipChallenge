@@ -1,13 +1,22 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useSelector} from "react-redux";
 import classNames from "classnames";
 import EditBox from "./EditBox";
 
 import styles from './MessageItem.module.scss';
 import EditInput from "../EditInput/EditInput";
+import {State} from "../../types/State";
+import {User} from "../../types/User";
+import {Message} from "../../types/Message";
 
-const MessageItem = (props: any) => {
-    const { currentUser, editMessage } = useSelector((state: any) => state);
+interface IProps {
+    key: string
+    user: User
+    message: Message
+}
+
+const MessageItem = (props: IProps) => {
+    const { currentUser, editMessage } = useSelector((state: State) => state);
     const {user, message} = props;
     const isOwner = (currentUser.id === user.id);
 

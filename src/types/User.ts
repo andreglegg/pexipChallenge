@@ -1,7 +1,6 @@
-export type User =
-    {
-        id?: string;
-        name?: string;
-    } |
-    string |
-    '';
+export type User = {
+    id?: string;
+    name: string;
+};
+
+

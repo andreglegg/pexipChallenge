@@ -1,6 +1,6 @@
 const TYPE = 'changeTab';
 
-const onChangeTab = (tab: string) => ({
+const onChangeTab = (tab: '1' | '2') => ({
     type: TYPE,
     payload: {
         tab,

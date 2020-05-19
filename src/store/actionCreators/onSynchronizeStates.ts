@@ -1,6 +1,8 @@
+import {State} from "../../types/State";
+
 const TYPE = 'onSynchronizeStates';
 
-const onSynchronizeStates = (data: any) => ({
+const onSynchronizeStates = (data: State) => ({
     type: TYPE,
     payload: {
         data,

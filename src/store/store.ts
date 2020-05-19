@@ -1,5 +1,4 @@
 import {createStore, applyMiddleware} from "redux";
-import reduceReducers from "reduce-reducers";
 import reducers from './reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 const thunkMiddleware = require('redux-thunk').default;
