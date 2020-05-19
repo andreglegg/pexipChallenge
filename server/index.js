@@ -59,6 +59,15 @@ wss.on('connection', function connection(ws) {
                 });
                 break;
             }
+            case 'editMessage': {
+                Store.editMessage(parsedData.payload);
+                wss.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(JSON.stringify(Store.state));
+                    }
+                });
+                break;
+            }
             case 'addUser': {
                 const newUser = {
                     id: parsedData.payload.id || uuidv4(),

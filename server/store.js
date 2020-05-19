@@ -16,11 +16,28 @@ class Store {
         this.state.messages = [...this.state.messages, newMessage]
     }
 
+    editMessage = (message) => {
+        const editedMessage = {
+            ...message,
+            updatedAt: Date.now(),
+        }
+        isMessage.assert(editedMessage);
+
+        this.state.messages = this.state.messages.map(msg =>
+            msg.id === editedMessage.id ? editedMessage : msg
+        );
+    }
+
     deleteMessage = (messageId) => {
-        const toBeDeleted = this.state.messages.filter((message) => message.id === messageId)[0];
+        const toBeDeleted = this.state.messages.filter((message) => message.id === messageId).slice()[0];
         toBeDeleted.message = 'DELETED';
         toBeDeleted.updatedAt = Date.now();
-        // this.state.users = [...this.state.messages, ...toBeDeleted];
+
+        isMessage.assert(toBeDeleted);
+
+        this.state.messages = this.state.messages.map(msg =>
+            msg.id === toBeDeleted.id ? toBeDeleted : msg
+        );
     }
 
     addUser = (user) => {
