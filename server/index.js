@@ -44,6 +44,15 @@ const initialState = {
     ]
 }
 
+const meetingBotMsg = (msg) => {
+    return{
+        'id': uuidv4(),
+        'userId': '100',
+        'message': msg,
+        'createdAt': date,
+        'updatedAt': date,
+}}
+
 wss.on('connection', function connection(ws) {
     console.log('connected')
     ws.on('message', function incoming(data) {
@@ -75,6 +84,7 @@ wss.on('connection', function connection(ws) {
                 }
                 Store.addUser(newUser);
                 wss.clients.forEach(function each(client) {
+                    Store.addNewMessage(meetingBotMsg(`${newUser.name} joined.`));
                     // send currentUser to the correct user
                     if (client !== ws && client.readyState === WebSocket.OPEN) {
                         client.send(JSON.stringify(Store.state));

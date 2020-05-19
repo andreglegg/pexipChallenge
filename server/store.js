@@ -4,7 +4,10 @@ class Store {
     constructor() {
         this.state = {
             messages: [],
-            users: []
+            users: [{
+                id:'100',
+                name: 'Meetingbot'
+            }]
         }
     }
 
