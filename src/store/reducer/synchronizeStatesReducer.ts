@@ -1,6 +1,7 @@
 import Action from '../actionCreators/onSynchronizeStates';
+import {State} from "../../types/State";
 
-const synchronizeStatesReducer = (state: any, action: any) => {
+const synchronizeStatesReducer = (state: State, action: any) => {
     console.log('del msg: ', action.payload.data.messages);
     return {
         ...state,

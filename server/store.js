@@ -6,14 +6,17 @@ class Store {
             messages: [],
             users: [{
                 id:'100',
-                name: 'Meetingbot'
+                name: 'Meetingbot',
+                isDeleted: false,
             }]
         }
     }
 
     addNewMessage = (message) => {
+        console.log('message: ', message);
         const newMessage = {
-            ...message
+            ...message,
+            isDeleted: false,
         }
         isMessage.assert(newMessage);
         this.state.messages = [...this.state.messages, newMessage]
@@ -33,7 +36,7 @@ class Store {
 
     deleteMessage = (messageId) => {
         const toBeDeleted = this.state.messages.filter((message) => message.id === messageId).slice()[0];
-        toBeDeleted.message = 'DELETED';
+        toBeDeleted.isDeleted = true;
         toBeDeleted.updatedAt = Date.now();
 
         isMessage.assert(toBeDeleted);
@@ -46,6 +49,15 @@ class Store {
     addUser = (user) => {
         // isMessage.assert(newUser);
         this.state.users = [...this.state.users, user]
+    }
+
+    deleteUser = (userId) => {
+        const toBeDeleted = this.state.users.filter((usr) => usr.id === userId).slice()[0];
+        toBeDeleted.isDeleted = true;
+
+        this.state.users = this.state.users.map(usr =>
+            usr.id === toBeDeleted.id ? toBeDeleted : usr
+        );
     }
 }
 

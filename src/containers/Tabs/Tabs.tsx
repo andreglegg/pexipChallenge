@@ -11,6 +11,7 @@ import hasCurrentUser from "../../utils/hasCurrentUser";
 import MessageItem from "../../components/MessageItem/MessageItem";
 
 import styles from './Tabs.module.scss';
+import Participants from "../../components/Participants/Participants";
 
 const Tabs = () => {
     const { ws, activeTab, currentUser, users, messages } = useSelector((state: any) => state);
@@ -41,7 +42,8 @@ const Tabs = () => {
     };
     useEffect(scrollToBottom, [messages]);
 
-    const ChatInputContainerStyle = classnames(styles.ChatInputContainer, 'pt-2', 'pl-3','pr-3','pb-3',)
+    const ChatInputContainerStyle = classnames(styles.ChatInputContainer, 'pt-2', 'pl-3','pr-3','pb-3',);
+    const HeaderTextStyle = classnames(styles.HeaderText, "text-center", "p-3");
 
     const renderMessages = messages.map((msg: any, index: any) => {
         const name = users.filter((usr: any) => usr.id === msg.userId)[0];
@@ -53,23 +55,27 @@ const Tabs = () => {
         { !hasCurrentUser(currentUser) ? <UserInput /> : <ChatInput />}
     </div>) : null;
 
+    const countActiveUsers = users.filter((usr: any) => !usr.isDeleted && usr.id !== '100').length;
 
     return (
         <div className={styles.TabsContainer}>
             <div className={styles.TabsHeader}>
-                <Col sm="12" className="text-center p-3">
+                <Col sm="12" className={HeaderTextStyle}>
                     Status Meeting Standup
                 </Col>
-                <Nav tabs>
-                    <NavItem>
+                <Nav tabs className={styles.TabNav}>
+                    <NavItem className={styles.TabNavItem}>
                         <NavLink
                             className={classnames({ active: activeTab === '1' })}
-                            onClick={() => { toggle('1'); }}
+                            onClick={() => {
+                                toggle('1');
+                                scrollToBottom();
+                            }}
                         >
-                            Participants ({users.length})
+                            Participants ({countActiveUsers})
                         </NavLink>
                     </NavItem>
-                    <NavItem>
+                    <NavItem className={styles.TabNavItem}>
                         <NavLink
                             className={classnames({ active: activeTab === '2' })}
                             onClick={() => { toggle('2'); }}
@@ -81,7 +87,7 @@ const Tabs = () => {
             </div>
             <TabContent activeTab={activeTab} className={styles.TabContent}>
                 <TabPane tabId="1">
-                    <div>Tab 1 Contents</div>
+                    <Participants />
                 </TabPane>
                 <TabPane tabId="2">
                     <div className='pl-3 pr-3'>

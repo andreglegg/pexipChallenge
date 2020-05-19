@@ -16,7 +16,7 @@ const MessageItem = (props: any) => {
     const created = new Date(message.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     const updated = new Date(message.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
 
-
+    const renderMessage = message.isDeleted ? 'DELETED' : message.message;
     return(
         <div className={classNames(styles.MessageItem, 'pb-3')}>
             <div className={styles.MetaBox}>
@@ -24,7 +24,7 @@ const MessageItem = (props: any) => {
                 <span>{!wasEdited ? created : `${updated} Edited`}</span>
                 <span>{isOwner ? <EditBox message={message} /> : null}</span></div>
             <div>
-                {editMessage.id === message.id ? <EditInput /> : message.message}
+                {editMessage.id === message.id ? <EditInput /> : renderMessage}
             </div>
         </div>
     )

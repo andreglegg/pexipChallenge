@@ -1,6 +1,8 @@
+import {User} from "../../types/User";
+
 const TYPE = 'changeUsernameInput';
 
-const onUsernameInput = (input: string) => ({
+const onUsernameInput = (input: User) => ({
     type: TYPE,
     payload: {
         input,

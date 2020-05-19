@@ -32,3 +32,24 @@
   flex: 0 0 105px;
   background: #ffffff;
 }
+
+.TabNav {
+  display: flex;
+  align-items: stretch;
+  background-color: #f1f1f1;
+}
+
+.TabNavItem {
+  flex-grow: 1;
+  text-align: center;
+  :global(.nav-link){
+    padding: 1rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.HeaderText {
+  background-color: #f1f1f1;
+}
