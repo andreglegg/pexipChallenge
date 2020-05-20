@@ -13,6 +13,7 @@ import MessageItem from "../../components/MessageItem/MessageItem";
 import styles from './Tabs.module.scss';
 import Participants from "../../components/Participants/Participants";
 import {State} from "../../types/State";
+import {Message} from "../../types/Message";
 
 const Tabs = () => {
     const { ws, activeTab, currentUser, users, messages } = useSelector((state: State) => state);
@@ -47,7 +48,7 @@ const Tabs = () => {
     const ChatInputContainerStyle = classnames(styles.ChatInputContainer, 'pt-2', 'pl-3','pr-3','pb-3',);
     const HeaderTextStyle = classnames(styles.HeaderText, "text-center", "p-3");
 
-    const renderMessages = messages.map((msg: any, index: any) => {
+    const renderMessages = messages.map((msg: Message, index: any) => {
         const name = users.filter((usr: any) => usr.id === msg.userId)[0];
         return(
             <MessageItem key={index} user={name} message={msg} />

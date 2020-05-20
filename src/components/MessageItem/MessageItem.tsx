@@ -32,7 +32,7 @@ const MessageItem = (props: IProps) => {
                 <span className="font-weight-bold mr-2">{user.name}</span>
                 <span className={styles.Gray}>{!wasEdited ? created : `${updated} Edited`}</span>
                 <span>{isOwner ? <EditBox message={message} /> : null}</span></div>
-            <div className={(message.userId === '100') ? styles.Gray : ''}>
+            <div className={(message.userId === '100' || message.isDeleted) ? styles.Gray : ''}>
                 {editMessage.id === message.id ? <EditInput /> : renderMessage}
             </div>
         </div>
