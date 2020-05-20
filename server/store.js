@@ -13,7 +13,6 @@ class Store {
     }
 
     addNewMessage = (message) => {
-        console.log('message: ', message);
         const newMessage = {
             ...message,
             isDeleted: false,

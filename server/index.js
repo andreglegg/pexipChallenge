@@ -27,7 +27,6 @@ wss.on('connection', function connection(ws) {
     console.log('connected');
     ws.on('message', function incoming(data) {
         const parsedData = JSON.parse(data);
-        console.log('parsedData: ', parsedData);
         switch (parsedData.type) {
             case 'addMessage': {
                 Store.addNewMessage(parsedData.payload);
@@ -56,9 +55,7 @@ wss.on('connection', function connection(ws) {
                 ws.user = Object.assign({}, newUser);
                 Store.addUser(newUser);
                 Store.addNewMessage(meetingBotMsg(`${newUser.name} joined.`));
-                console.log('user joined', wss.clients.length);
                 wss.clients.forEach(function each(client) {
-                    console.log('sending join msg', client === ws)
                     // send currentUser to the correct user
                     if (client === ws && client.readyState === WebSocket.OPEN) {
                         client.send(JSON.stringify({...Store.state, currentUser: newUser}));
@@ -90,7 +87,6 @@ wss.on('connection', function connection(ws) {
             Store.deleteUser(ws.user.id);
 
             wss.clients.forEach(function each(client) {
-                console.log('clients')
                 client.send(JSON.stringify(Store.state));
             });
         }

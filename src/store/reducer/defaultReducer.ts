@@ -6,7 +6,7 @@ const defaultReducer = (state: State) => {
         ...state,
         messages: [],
         users: [],
-        ws: new WebSocket('ws://192.168.86.191:4000'),
+        ws: new WebSocket('ws://localhost:4000'),
         activeTab: '2',
         chatInput: '',
         editMessage: [],
