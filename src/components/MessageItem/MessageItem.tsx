@@ -10,9 +10,9 @@ import {User} from "../../types/User";
 import {Message} from "../../types/Message";
 
 interface IProps {
-    key: string
-    user: User
-    message: Message
+    key: string;
+    user: User;
+    message: Message;
 }
 
 const MessageItem = (props: IProps) => {
@@ -30,9 +30,9 @@ const MessageItem = (props: IProps) => {
         <div className={classNames(styles.MessageItem, 'pb-3')}>
             <div className={styles.MetaBox}>
                 <span className="font-weight-bold mr-2">{user.name}</span>
-                <span>{!wasEdited ? created : `${updated} Edited`}</span>
+                <span className={styles.Gray}>{!wasEdited ? created : `${updated} Edited`}</span>
                 <span>{isOwner ? <EditBox message={message} /> : null}</span></div>
-            <div>
+            <div className={(message.userId === '100') ? styles.Gray : ''}>
                 {editMessage.id === message.id ? <EditInput /> : renderMessage}
             </div>
         </div>
