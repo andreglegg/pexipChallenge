@@ -1,5 +1,6 @@
 import React from 'react';
 import {useSelector} from "react-redux";
+import {Anchorme} from 'react-anchorme';
 import classNames from "classnames";
 import EditBox from "./EditBox";
 
@@ -10,7 +11,6 @@ import {User} from "../../types/User";
 import {Message} from "../../types/Message";
 
 interface IProps {
-    key: string;
     user: User;
     message: Message;
 }
@@ -25,7 +25,7 @@ const MessageItem = (props: IProps) => {
     const created = new Date(message.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     const updated = new Date(message.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
 
-    const renderMessage = message.isDeleted ? 'DELETED' : message.message;
+    const renderMessage = message.isDeleted ? 'DELETED' : (<Anchorme target="_blank" rel="noreferrer noopener">{message.message}</Anchorme>);
     return(
         <div className={classNames(styles.MessageItem, 'pb-3')}>
             <div className={styles.MetaBox}>
