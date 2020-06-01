@@ -22,7 +22,7 @@ const meetingBotMsg = (msg) => {
         'isDeleted': false,
     }}
 
-console.log('starting websocket server...')
+console.log('websocket server started...')
 wss.on('connection', function connection(ws) {
     console.log('connected');
     ws.on('message', function incoming(data) {
