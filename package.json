@@ -23,6 +23,7 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
+    "react-tiny-link": "^3.4.0",
     "reactstrap": "^8.4.1",
     "reduce-reducers": "^1.0.4",
     "reducer-patterns": "^0.3.0",
