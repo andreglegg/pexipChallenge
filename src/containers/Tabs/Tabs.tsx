@@ -34,8 +34,9 @@ const Tabs = () => {
             const data = JSON.parse(event.data);
             synchronizeStates(data);
         };
-        if(activeTab === '2') scrollToBottom();
-    });
+    },[ws]);
+
+    useEffect(() => scrollToBottom(), [activeTab]);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollToBottom = () => {
@@ -43,7 +44,6 @@ const Tabs = () => {
             messagesEndRef.current.scrollIntoView({behavior: "smooth"})
         }
     };
-    useEffect(scrollToBottom, [messages]);
 
     const ChatInputContainerStyle = classnames(styles.ChatInputContainer, 'pt-2', 'pl-3','pr-3','pb-3',);
     const HeaderTextStyle = classnames(styles.HeaderText, "text-center", "p-3");
