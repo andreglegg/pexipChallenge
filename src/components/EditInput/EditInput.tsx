@@ -4,7 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
 
 const EditInput = () => {
-    const { ws, editMessage } = useSelector((state: any) => state);
+    const ws = useSelector((state: any) => state.ws);
+    const editMessage = useSelector((state: any) => state.editMessage);
     const dispatch = useDispatch();
 
     const changeEditMessage = (message: any) => dispatch(onChangeEditInput(

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Col } from 'reactstrap';
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch, shallowEqual} from "react-redux";
 import classnames from 'classnames';
 
 import onChangeTab from "../../../src/store/actionCreators/onChangeTab";
@@ -16,7 +16,11 @@ import {State} from "../../types/State";
 import {Message} from "../../types/Message";
 
 const Tabs = () => {
-    const { ws, activeTab, currentUser, users, messages } = useSelector((state: State) => state);
+    const ws = useSelector((state: State) => state.ws);
+    const activeTab = useSelector((state: State) => state.activeTab);
+    const currentUser = useSelector((state: State) => state.currentUser);
+    const users = useSelector((state: State) => state.users);
+    const messages = useSelector((state: State) => state.messages);
     const dispatch = useDispatch();
 
     const changeTab = (activeTab: '1' | '2') => dispatch(onChangeTab(activeTab));
@@ -44,6 +48,7 @@ const Tabs = () => {
             messagesEndRef.current.scrollIntoView({behavior: "smooth"})
         }
     };
+    useEffect(() => scrollToBottom(), [messages]);
 
     const ChatInputContainerStyle = classnames(styles.ChatInputContainer, 'pt-2', 'pl-3','pr-3','pb-3',);
     const HeaderTextStyle = classnames(styles.HeaderText, "text-center", "p-3");

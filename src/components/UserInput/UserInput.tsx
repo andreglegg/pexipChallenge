@@ -6,7 +6,8 @@ import {User} from '../../types/User';
 import {State} from "../../types/State";
 
 const UserInput = () => {
-    const { ws, usernameInput } = useSelector((state: State) => state);
+    const ws = useSelector((state: State) => state.ws);
+    const usernameInput = useSelector((state: State) => state.usernameInput);
     const dispatch = useDispatch();
 
     const changeUsernameInput = (input: User | string) => dispatch(onChangeUsernameInput(input));

@@ -6,7 +6,7 @@ import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
 import {State} from "../../types/State";
 
 const EditBox = (props: any) => {
-    const { ws } = useSelector((state: State) => state);
+    const ws = useSelector((state: State) => state.ws);
     const dispatch = useDispatch();
     const { message } = props;
     const changeEditInput = (input: string) => dispatch(onChangeEditInput(input));

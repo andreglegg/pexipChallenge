@@ -6,7 +6,9 @@ import onChangeChatInput from "../../store/actionCreators/onChangeChatInput";
 import {State} from "../../types/State";
 
 const ChatInput = () => {
-    const { ws, chatInput, currentUser } = useSelector((state: State) => state);
+    const ws = useSelector((state: State) => state.ws);
+    const chatInput = useSelector((state: State) => state.chatInput);
+    const currentUser = useSelector((state: State) => state.currentUser);
     const dispatch = useDispatch();
 
     const changeChatInput = (input: string) => dispatch(onChangeChatInput(input));

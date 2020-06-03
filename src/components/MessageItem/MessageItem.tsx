@@ -19,7 +19,8 @@ interface IProps {
 }
 
 const MessageItem = (props: IProps) => {
-    const { currentUser, editMessage } = useSelector((state: State) => state);
+    const currentUser = useSelector((state: State) => state.currentUser);
+    const editMessage = useSelector((state: State) => state.editMessage);
     const {user, message} = props;
     const isOwner = (currentUser.id === user.id);
 

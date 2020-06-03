@@ -3,7 +3,7 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import {useSelector} from "react-redux";
 
 const Participants = () => {
-    const { users } = useSelector((state: any) => state);
+    const users = useSelector((state: any) => state.users);
 
     const renderActiveUsers = users.filter((usr: any) => !usr.isDeleted && usr.id !== '100')
         .map((usr: any, index: number) =>
