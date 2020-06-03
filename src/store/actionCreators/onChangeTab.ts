@@ -1,6 +1,8 @@
+import {Tabs} from "../../types/Tabs";
+
 const TYPE = 'changeTab';
 
-const onChangeTab = (tab: '1' | '2') => ({
+const onChangeTab = (tab: Tabs) => ({
     type: TYPE,
     payload: {
         tab,

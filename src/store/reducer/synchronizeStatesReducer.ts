@@ -1,12 +1,15 @@
 import Action from '../actionCreators/onSynchronizeStates';
 import {State} from "../../types/State";
+import {ActionType} from "../../types/ActionType";
 
-const synchronizeStatesReducer = (state: State, action: any) => {
+const synchronizeStatesReducer = (state: State, action: ActionType) => {
+
+    const { messages, users, currentUser } = action.payload.data;
     return {
         ...state,
-        messages: action.payload.data.messages,
-        users: action.payload.data.users,
-        currentUser: action.payload.data.currentUser || state.currentUser,
+        messages: messages,
+        users: users,
+        currentUser: currentUser || state.currentUser,
     };
 };
 

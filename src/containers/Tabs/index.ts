@@ -1,2 +1,2 @@
-import Tabs from "./Tabs";
-export default Tabs;
+import RenderTabs from "./RenderTabs";
+export default RenderTabs;

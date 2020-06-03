@@ -2,13 +2,14 @@ import React from 'react';
 import {Form, FormGroup, Input, InputGroup} from 'reactstrap';
 import {useDispatch, useSelector} from "react-redux";
 import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
+import {State} from "../../types/State";
 
 const EditInput = () => {
-    const ws = useSelector((state: any) => state.ws);
-    const editMessage = useSelector((state: any) => state.editMessage);
+    const ws = useSelector((state: State) => state.ws);
+    const editMessage = useSelector((state: State) => state.editMessage);
     const dispatch = useDispatch();
 
-    const changeEditMessage = (message: any) => dispatch(onChangeEditInput(
+    const changeEditMessage = (message: string) => dispatch(onChangeEditInput(
         {
             ...editMessage,
             message: message,

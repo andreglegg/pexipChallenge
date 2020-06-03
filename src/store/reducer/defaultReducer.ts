@@ -1,4 +1,5 @@
 import {State} from "../../types/State";
+import config from '../../Config';
 
 const defaultReducer = (state: State) => {
 
@@ -6,7 +7,7 @@ const defaultReducer = (state: State) => {
         ...state,
         messages: [],
         users: [],
-        ws: new WebSocket('ws://localhost:4000'),
+        ws: new WebSocket(config.wsUrl),
         activeTab: '2',
         chatInput: '',
         editMessage: [],

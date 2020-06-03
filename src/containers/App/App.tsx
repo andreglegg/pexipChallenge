@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Tabs from "../Tabs";
+import RenderTabs from "../Tabs";
 
-const App = () => <Tabs />
+const App = () => <RenderTabs />
 
 export default App;

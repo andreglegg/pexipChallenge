@@ -1,8 +1,8 @@
 export type Message = {
-    id: string;
+    id?: string;
     userId: string;
     message: string;
     createdAt: string;
     updatedAt: string;
     isDeleted: boolean;
-}
+};

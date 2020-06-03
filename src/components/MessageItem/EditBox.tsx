@@ -4,12 +4,17 @@ import styles from './MessageItem.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
 import {State} from "../../types/State";
+import {Message} from "../../types/Message";
 
-const EditBox = (props: any) => {
+interface IProps {
+    message: Message;
+}
+
+const EditBox = (props: IProps) => {
     const ws = useSelector((state: State) => state.ws);
     const dispatch = useDispatch();
     const { message } = props;
-    const changeEditInput = (input: string) => dispatch(onChangeEditInput(input));
+    const changeEditInput = (input: Message) => dispatch(onChangeEditInput(input));
 
     const onDeleteMessage = () => {
 

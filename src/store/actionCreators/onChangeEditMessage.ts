@@ -1,6 +1,8 @@
+import {Message} from "../../types/Message";
+
 const TYPE = 'changeEditMessage';
 
-const onChangeEditMessage = (message: string) => ({
+const onChangeEditMessage = (message: Message | string) => ({
     type: TYPE,
     payload: {
         message,
