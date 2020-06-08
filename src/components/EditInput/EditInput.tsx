@@ -4,11 +4,13 @@ import {useDispatch, useSelector} from "react-redux";
 import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
 import {State} from "../../types/State";
 import {BaseEmoji, Emoji, Picker} from 'emoji-mart';
+import {DataType} from '../../enums';
+import {WsProps} from '../../types/WsProps';
 
-const EditInput = () => {
+const EditInput = (props: WsProps) => {
+    const { send } = props;
     const [selection, setSelection] = useState({start: 0, end: 0});
     const [openEmoji, setOpenEmoji] = useState(false);
-    const ws = useSelector((state: State) => state.ws);
     const editMessage = useSelector((state: State) => state.editMessage);
     const dispatch = useDispatch();
 
@@ -41,10 +43,10 @@ const EditInput = () => {
             ...editMessage,
         }
         const data = {
-            type: 'editMessage',
+            type: DataType.editMessage,
             payload: message
         }
-        ws.send(JSON.stringify(data));
+        send(JSON.stringify(data));
         emptyEditMessage();
     }
 

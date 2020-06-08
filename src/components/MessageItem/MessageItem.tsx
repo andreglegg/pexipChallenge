@@ -16,13 +16,14 @@ import styles from './MessageItem.module.scss';
 interface IProps {
     user: User;
     message: Message;
+    send: any;
 }
 
 const MessageItem = (props: IProps) => {
     const currentUser = useSelector((state: State) => state.currentUser);
     const editMessage = useSelector((state: State) => state.editMessage);
-    const {user, message} = props;
-    const isOwner = (currentUser.id === user.id);
+    const {user, message, send} = props;
+    const isOwner = currentUser ? (currentUser.id === user.id) : false;
 
     const wasEdited = (message.createdAt !== message.updatedAt);
 
@@ -46,9 +47,9 @@ const MessageItem = (props: IProps) => {
             <div className={styles.MetaBox}>
                 <span className='font-weight-bold mr-2'>{user.name}</span>
                 <span className={styles.Gray}>{!wasEdited ? created : `${updated} Edited`}</span>
-                <span>{isOwner ? <EditBox message={message} /> : null}</span></div>
+                <span>{isOwner ? <EditBox message={message} send={send} /> : null}</span></div>
             <div className={(message.userId === '100' || message.isDeleted) ? styles.Gray : ''}>
-                {editMessage.id === message.id ? <EditInput /> : renderMessage}
+                {editMessage.id === message.id ? <EditInput send={send} /> : renderMessage}
             </div>
             {renderLinkPreview}
         </div>

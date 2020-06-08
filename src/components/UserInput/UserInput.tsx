@@ -4,9 +4,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import onChangeUsernameInput from '../../store/actionCreators/onChangeUsernameInput';
 import {User} from '../../types/User';
 import {State} from "../../types/State";
+import {DataType} from '../../enums';
+import {WsProps} from '../../types/WsProps';
 
-const UserInput = () => {
-    const ws = useSelector((state: State) => state.ws);
+const UserInput = (props: WsProps) => {
+    const { send } = props;
+    // const ws = useSelector((state: State) => state.ws);
     const usernameInput = useSelector((state: State) => state.usernameInput);
     const dispatch = useDispatch();
 
@@ -18,10 +21,10 @@ const UserInput = () => {
             name: usernameInput,
         }
         const data = {
-            type: 'addUser',
+            type: DataType.addUser,
             payload: user
         }
-        ws.send(JSON.stringify(data));
+        send(JSON.stringify(data));
         changeUsernameInput('');
     }
 

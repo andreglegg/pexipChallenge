@@ -5,11 +5,13 @@ import {BaseEmoji, Emoji, Picker} from 'emoji-mart';
 import {useDispatch, useSelector} from "react-redux";
 import onChangeChatInput from "../../store/actionCreators/onChangeChatInput";
 import {State} from "../../types/State";
+import {DataType} from '../../enums';
+import {WsProps} from '../../types/WsProps';
 
-const ChatInput = () => {
+const ChatInput = (props: WsProps) => {
+    const { send } = props;
     const [selection, setSelection] = useState({start: 0, end: 0});
     const [openEmoji, setOpenEmoji] = useState(false);
-    const ws = useSelector((state: State) => state.ws);
     const chatInput = useSelector((state: State) => state.chatInput);
     const currentUser = useSelector((state: State) => state.currentUser);
     const dispatch = useDispatch();
@@ -40,10 +42,10 @@ const ChatInput = () => {
             updatedAt: Date.now(),
         }
         const data = {
-            type: 'addMessage',
+            type: DataType.addMessage,
             payload: message
         }
-        ws.send(JSON.stringify(data));
+        send(JSON.stringify(data));
         changeChatInput('');
     }
 
