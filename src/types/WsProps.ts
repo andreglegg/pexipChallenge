@@ -3,7 +3,7 @@ import {Message} from './Message';
 
 export type WsProps = {
     readyState?: number | string
-    message?: {type: string; messages: Array<Message>, users: Array<User> }
+    message?: string
     send: Function
     ws?: WebSocket
 };

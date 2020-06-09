@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Form, FormGroup, Input, InputGroup} from 'reactstrap';
+import {Button, Form, FormGroup, Input, InputGroup, InputProps} from 'reactstrap';
 import {useDispatch, useSelector} from "react-redux";
 import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
 import {State} from "../../types/State";
@@ -28,7 +28,7 @@ const EditInput = (props: WsProps) => {
         toggleEmojiPicker();
     };
 
-    const handleOnSelect = (event: any) => {
+    const handleOnSelect = (event: InputProps | React.SyntheticEvent<HTMLInputElement>) => {
         setSelection({
             start: event.target.selectionStart,
             end: event.target.selectionEnd
@@ -59,7 +59,7 @@ const EditInput = (props: WsProps) => {
                         name="editInput"
                         placeholder="Message"
                         value={editMessage.message}
-                        onSelect={handleOnSelect}
+                        onSelect={(event) => handleOnSelect(event)}
                         onChange={(event) => changeEditMessage(event.target.value)}
                     />
                     <Button

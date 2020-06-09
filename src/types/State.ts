@@ -9,5 +9,5 @@ export interface State {
     chatInput: string;
     usernameInput: string;
     editMessage: Message;
-    ws: any;
+    ws: WebSocket;
 }

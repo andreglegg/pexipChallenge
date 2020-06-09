@@ -16,7 +16,7 @@ import styles from './MessageItem.module.scss';
 interface IProps {
     user: User;
     message: Message;
-    send: any;
+    send: Function;
 }
 
 const MessageItem = (props: IProps) => {

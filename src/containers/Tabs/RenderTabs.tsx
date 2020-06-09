@@ -15,9 +15,10 @@ import {State} from "../../types/State";
 import {Message} from "../../types/Message";
 import {Tabs} from "../../types/Tabs";
 import {User} from "../../types/User";
+import {WsProps} from '../../types/WsProps';
 
 
-const RenderTabs = (props: any) => {
+const RenderTabs = (props: JSX.IntrinsicAttributes & WsProps) => {
     const {send} = props;
     const activeTab = useSelector((state: State) => state.activeTab);
     const currentUser = useSelector((state: State) => state.currentUser);

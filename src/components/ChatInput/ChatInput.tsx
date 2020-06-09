@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import {Button, Form, FormGroup, Input, InputGroup} from 'reactstrap';
+import {Button, Form, FormGroup, Input, InputGroup, InputProps} from 'reactstrap';
 import {BaseEmoji, Emoji, Picker} from 'emoji-mart';
 import {useDispatch, useSelector} from "react-redux";
 import onChangeChatInput from "../../store/actionCreators/onChangeChatInput";
@@ -25,7 +25,7 @@ const ChatInput = (props: WsProps) => {
         toggleEmojiPicker();
     };
 
-    const handleOnSelect = (event: any) => {
+    const handleOnSelect = (event: InputProps | React.SyntheticEvent<HTMLInputElement>) => {
         setSelection({
             start: event.target.selectionStart,
             end: event.target.selectionEnd
@@ -58,7 +58,7 @@ const ChatInput = (props: WsProps) => {
                         name="chatInput"
                         placeholder="Message"
                         value={chatInput}
-                        onSelect={handleOnSelect}
+                        onSelect={(event) => handleOnSelect(event)}
                         onChange={(event) => changeChatInput(event.target.value)}
                     />
                     <Button

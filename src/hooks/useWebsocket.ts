@@ -52,6 +52,7 @@ function useWebsocket(url: string) {
                 case DataType.deleteMessage:
                 case DataType.editMessage: {
                     console.log('onSynchronizeMessages')
+                    dispatch(onSynchronizeUsers(data.users));
                     dispatch(onSynchronizeMessages(data.messages));
                     break;
                 }
@@ -65,8 +66,6 @@ function useWebsocket(url: string) {
                     break;
                 }
             }
-            /*dispatch(onSynchronizeUsers(data.users));
-            dispatch(onSynchronizeMessages(data.messages));*/
 
             console.log('data: ', data);
             setMessage(data);
