@@ -4,7 +4,7 @@ import {Anchorme} from 'react-anchorme';
 import { ReactTinyLink } from 'react-tiny-link';
 import classNames from 'classnames';
 
-import { validURL, formatUrl } from '../../utils/UrlHelper';
+import { validURL, formatUrl, isDataURL } from '../../utils/UrlHelper';
 import EditBox from './EditBox';
 import EditInput from '../EditInput/EditInput';
 import {State} from '../../types/State';
@@ -29,11 +29,15 @@ const MessageItem = (props: IProps) => {
 
     const created = new Date(message.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     const updated = new Date(message.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-
-    const renderMessage = message.isDeleted ? 'DELETED' : (<Anchorme target='_blank' rel='noreferrer noopener'>{message.message}</Anchorme>);
+    //TODO: clean up this block
+    let renderMessage = message.isDeleted ? 'DELETED' : (<Anchorme target='_blank' rel='noreferrer noopener'>{message.message}</Anchorme>);
+    if (isDataURL(message.message)){
+        renderMessage = <img src={message.message} alt='image' style={{'width': '100%'}} />
+    }
     const firstLink = message.message.split(' ')
         .map((str) => validURL(str) ? str : false)
         .filter(item => item !== false)[0];
+
     const renderLinkPreview = firstLink ? <ReactTinyLink
         cardSize='small'
         showGraphic={true}

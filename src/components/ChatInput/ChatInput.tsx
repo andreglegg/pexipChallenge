@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {Button, Form, FormGroup, Input, InputGroup, InputProps} from 'reactstrap';
 import {BaseEmoji, Emoji, Picker} from 'emoji-mart';
@@ -12,6 +12,7 @@ const ChatInput = (props: WsProps) => {
     const { send } = props;
     const [selection, setSelection] = useState({start: 0, end: 0});
     const [openEmoji, setOpenEmoji] = useState(false);
+    const [selectedFile, setSelectedFile] = useState();
     const chatInput = useSelector((state: State) => state.chatInput);
     const currentUser = useSelector((state: State) => state.currentUser);
     const dispatch = useDispatch();
@@ -49,6 +50,35 @@ const ChatInput = (props: WsProps) => {
         changeChatInput('');
     }
 
+    const handleOnFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            setSelectedFile(event.target?.result);
+        };
+
+        // @ts-ignore
+        reader.readAsDataURL(file);
+
+
+    }
+
+    const handleSendFile = () => {
+        const message = {
+            id: uuidv4(),
+            userId: currentUser.id,
+            message: selectedFile,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+        }
+
+        const data = {
+            type: DataType.addMessage,
+            payload: message
+        }
+        send(JSON.stringify(data));
+    }
+
     return(
         <Form onSubmit={(event) => handleOnSubmit(event)}>
             <FormGroup className='m-0'>
@@ -61,6 +91,10 @@ const ChatInput = (props: WsProps) => {
                         onSelect={(event) => handleOnSelect(event)}
                         onChange={(event) => changeChatInput(event.target.value)}
                     />
+                    <Input type="file" name="file" onChange={(event) => handleOnFileChange(event)} />
+                    <Button onClick={handleSendFile}>
+                        send file
+                    </Button>
                     <Button
                         onClick={toggleEmojiPicker}
                         color="none"
