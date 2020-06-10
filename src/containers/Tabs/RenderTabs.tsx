@@ -1,10 +1,9 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Col } from 'reactstrap';
 import {useSelector, useDispatch} from "react-redux";
 import classnames from 'classnames';
 
 import onChangeTab from "../../../src/store/actionCreators/onChangeTab";
-import onSynchronizeStates from "../../store/actionCreators/onSynchronizeStates";
 import ChatInput from "../../components/ChatInput/ChatInput";
 import UserInput from "../../components/UserInput/UserInput";
 import hasCurrentUser from "../../utils/hasCurrentUser";
@@ -16,9 +15,11 @@ import {State} from "../../types/State";
 import {Message} from "../../types/Message";
 import {Tabs} from "../../types/Tabs";
 import {User} from "../../types/User";
+import {WsProps} from '../../types/WsProps';
 
-const RenderTabs = () => {
-    const ws = useSelector((state: State) => state.ws);
+
+const RenderTabs = (props: JSX.IntrinsicAttributes & WsProps) => {
+    const {send} = props;
     const activeTab = useSelector((state: State) => state.activeTab);
     const currentUser = useSelector((state: State) => state.currentUser);
     const users = useSelector((state: State) => state.users);
@@ -26,17 +27,6 @@ const RenderTabs = () => {
     const dispatch = useDispatch();
 
     const changeTab = (activeTab: Tabs) => dispatch(onChangeTab(activeTab));
-    const synchronizeStates = useCallback( (data: State) => dispatch(onSynchronizeStates(data)), [dispatch]);
-
-    useEffect(() => {
-        ws.onopen = () => {
-            console.log("connected");
-        };
-        ws.onmessage = (event: { data: string; }) => {
-            const data = JSON.parse(event.data);
-            synchronizeStates(data);
-        };
-    },[ws, synchronizeStates]);
 
     useEffect(() => scrollToBottom(), [activeTab]);
 
@@ -60,11 +50,11 @@ const RenderTabs = () => {
     const renderMessages = messages.map((msg: Message, index: number) => {
         const name = users.filter((usr: User) => usr.id === msg.userId)[0];
         return(
-            <MessageItem key={index} user={name} message={msg} />
+            <MessageItem key={index} user={name} message={msg} send={send} />
         )
     })
     const renderChatInput = (activeTab === '2') ? (<div className={ChatInputContainerStyle}>
-        { !hasCurrentUser(currentUser) ? <UserInput /> : <ChatInput />}
+        { !hasCurrentUser(currentUser) ? <UserInput {...props} /> : <ChatInput {...props} />}
     </div>) : null;
 
     const countActiveUsers = users.filter((usr: User) => !usr.isDeleted && usr.id !== '100').length;

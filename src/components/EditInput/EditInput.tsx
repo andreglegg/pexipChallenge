@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
-import {Button, Form, FormGroup, Input, InputGroup} from 'reactstrap';
+import {Button, Form, FormGroup, Input, InputGroup, InputProps} from 'reactstrap';
 import {useDispatch, useSelector} from "react-redux";
 import onChangeEditInput from "../../store/actionCreators/onChangeEditMessage";
 import {State} from "../../types/State";
 import {BaseEmoji, Emoji, Picker} from 'emoji-mart';
+import {DataType} from '../../enums';
+import {WsProps} from '../../types/WsProps';
 
-const EditInput = () => {
+const EditInput = (props: WsProps) => {
+    const { send } = props;
     const [selection, setSelection] = useState({start: 0, end: 0});
     const [openEmoji, setOpenEmoji] = useState(false);
-    const ws = useSelector((state: State) => state.ws);
     const editMessage = useSelector((state: State) => state.editMessage);
     const dispatch = useDispatch();
 
@@ -26,7 +28,7 @@ const EditInput = () => {
         toggleEmojiPicker();
     };
 
-    const handleOnSelect = (event: any) => {
+    const handleOnSelect = (event: InputProps | React.SyntheticEvent<HTMLInputElement>) => {
         setSelection({
             start: event.target.selectionStart,
             end: event.target.selectionEnd
@@ -41,10 +43,10 @@ const EditInput = () => {
             ...editMessage,
         }
         const data = {
-            type: 'editMessage',
+            type: DataType.editMessage,
             payload: message
         }
-        ws.send(JSON.stringify(data));
+        send(JSON.stringify(data));
         emptyEditMessage();
     }
 
@@ -57,7 +59,7 @@ const EditInput = () => {
                         name="editInput"
                         placeholder="Message"
                         value={editMessage.message}
-                        onSelect={handleOnSelect}
+                        onSelect={(event) => handleOnSelect(event)}
                         onChange={(event) => changeEditMessage(event.target.value)}
                     />
                     <Button
