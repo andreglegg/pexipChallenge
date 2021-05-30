@@ -35,7 +35,7 @@
     "typescript": "~3.7.2",
     "uuid": "^8.0.0",
     "vet": "^3.3.4",
-    "ws": "^7.3.0"
+    "ws": "^7.4.6"
   },
   "scripts": {
     "start": "react-scripts start",
